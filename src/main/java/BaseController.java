@@ -22,6 +22,7 @@ public class BaseController {
 
         staticFiles.location("/public"); // Static files
 
+        port(8080);
         get("/hw", (req, resp) -> "Hello world");
         get("/hello", (req, resp) -> new ModelAndView(new HashMap<>(), "index"), new ThymeleafTemplateEngine());
         get("/message", "application/json", (req, resp) -> messageService.getMessages(), new JsonTransformer());
