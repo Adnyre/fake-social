@@ -16,7 +16,10 @@ public class MessageGenerator {
             "whatever",
             "couldn't care less",
             "WOW!",
-            "OMG!"
+            "OMG!",
+            "Here: www.example.com",
+            "Have a look at http://www.example.com",
+            "http://en.wikipedia.org - look here"
     };
     private static final List<User> USERS =
             Collections.unmodifiableList(Arrays.asList(User.values()));

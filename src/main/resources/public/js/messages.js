@@ -1,4 +1,6 @@
 var monthsShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var colors =['aquamarine', 'bisque', 'pink', 'plum'];
+var users = [];
 
 setInterval(function(){
     var loadedMsgIds = getLoadedMessageIds();
@@ -10,9 +12,13 @@ setInterval(function(){
                   dataType: "json",
                   url: "message/" + messageId,
                   success: function(message){
+                      if (users.indexOf(message.user) == -1) {
+                          users.push(message.user);
+                      }
                       var messageTag = "<div class=\"message col-lg-12\" id=\"MSG" + message.id +
                           "\"> <div class=\"message-author\">" + message.user +
-                          "</div> <div class=\"row\"> <div class=\"col-lg-10 simple-message list-group-item\" style=\"background: pink;\">" + message.text +
+                          "</div> <div class=\"row\"> <div class=\"col-lg-10 simple-message list-group-item\" style=\"background: " + colors[users.indexOf(message.user)] +
+                          ";\">" + replaceUrl(message.text) +
                           "</div><div class=\"col-lg-2 message-time\">" + getTime(message.time) + "</div> </div> </div>";
                            $(".message-feed").append(messageTag);
                        },
