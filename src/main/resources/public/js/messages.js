@@ -21,7 +21,11 @@ setInterval(function(){
                           ";\">" + replaceUrl(message.text) +
                           "</div><div class=\"col-lg-2 message-time\">" + getTime(message.time) + "</div> </div> </div>";
                            $(".message-feed").append(messageTag);
-                       },
+
+                      $("#MSG" + message.id + " a").each(function() {
+                          checkLink(this);
+                      });
+                  },
                   async: false
                 });
             }

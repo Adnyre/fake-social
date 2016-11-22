@@ -12,14 +12,15 @@ public class MessageGenerator {
     private static final String[] TEXT_POOL = {
             "Hello!",
             "Bye!",
-            "LOL!",
+            "LOL! https://upload.wikimedia.org/wikipedia/commons/8/81/Comet_67P_on_19_September_2014_NavCam_mosaic.jpg",
             "whatever",
             "couldn't care less",
             "WOW!",
-            "OMG!",
+            "OMG! https://upload.wikimedia.org/wikipedia/commons/8/81/Comet_67P_on_19_September_2014_NavCam_mosaic.jpg",
             "Here: www.example.com",
             "Have a look at http://www.example.com",
-            "http://en.wikipedia.org - look here"
+            "http://en.wikipedia.org - look here",
+            "behold: https://upload.wikimedia.org/wikipedia/commons/8/81/Comet_67P_on_19_September_2014_NavCam_mosaic.jpg"
     };
     private static final List<User> USERS =
             Collections.unmodifiableList(Arrays.asList(User.values()));
