@@ -7,11 +7,12 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="/css/main.css" rel="stylesheet"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/parser.js"></script>
         <script src="/js/messages.js"></script>
-        <!--th:href="@{../public/css/bootstrap.min.css}"-->
+        <script src="/js/main.js"></script>        <!--th:href="@{../public/css/bootstrap.min.css}"-->
     </head>
     <body>
         <div class="container-fluid">
@@ -37,10 +38,18 @@
                         </div>
                         <div>
                             <div class="input-group">
-                                <input type="text" class="form-control" aria-label="..."/>
+                                <div id="myModal" class="modal">
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <img id="source" src="/img/emo_sm.gif"
+                                             width="150" height="94"/>
+                                    </div>
+                                </div>
+                                <input id="messageText" type="text" class="form-control" aria-label="..."/>
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default">Smiley</button>
-                                    <button type="button" class="btn btn-default">Submit</button>
+                                    <button id="emoBtn" type="button" class="btn btn-default"
+                                    onclick="myModal.style='display: block'">Smiley</button>
+                                    <button id="sendBtn" type="button" class="btn btn-default">Submit</button>
                                 </div>
                             </div>
                         </div>

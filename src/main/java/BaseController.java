@@ -27,6 +27,10 @@ public class BaseController {
         get("/hello", (req, resp) -> new ModelAndView(new HashMap<>(), "index"), new ThymeleafTemplateEngine());
         get("/message", "application/json", (req, resp) -> messageService.getMessages(), new JsonTransformer());
         get("/message/*", "application/json", (req, resp) -> messageService.getMessage(Integer.parseInt(req.splat()[0])), new JsonTransformer());
+        post("/message", (req, resp) -> {
+            resp.type("application/json");
+            return null;
+        });
         get("/message_id", "application/json", (req, resp) -> messageService.getMessageIds(), new JsonTransformer());
     }
 }

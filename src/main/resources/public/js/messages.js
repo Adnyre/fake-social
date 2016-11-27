@@ -2,6 +2,51 @@ var monthsShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'
 var colors =['aquamarine', 'bisque', 'pink', 'plum'];
 var users = [];
 
+$(document).ready(function (e) {
+    $('#source').click(function (e) { //Offset mouse Position
+        var coords = {
+             x: e.pageX - $(this).offset().left,
+             y: e.pageY - $(this).offset().top
+         };
+        $('#messageText').val($('#messageText').val() + EmoticonHandler.emoticons[EmoticonHandler.getIndex(coords)]);
+        $('#myModal').hide();
+    });
+
+    $('#sendBtn').click(function (e) {
+        var rawText = $('#messageText').val();
+        var now = new Date();
+        var message = {
+            time: {"date": {
+                        "year": now.getFullYear(),
+                        "month": now.getMonth() + 1,
+                        "day": now.getDate()},
+                   "time": {
+                        "hour": now.getHours(),
+                        "minute": now.getMinutes(),
+                        "second": now.getSeconds(),
+                        "nano": 0
+                   }
+            },
+            user: "ME", //TODO
+            text: rawText
+        };
+
+        var tag = "<div class=\"message col-lg-12\" id=\"MSG" + 0 +
+          "\"> <div class=\"message-author\">" + message.user +
+          "</div> <div class=\"row\"> <div class=\"col-lg-10 simple-message list-group-item\" style=\"background: " +
+          colors[users.indexOf(message.user)] + ";\">" + Parser.replaceEmoticons(message.text) +
+          "</div><div class=\"col-lg-2 message-time\">" + getTime(message.time) + "</div> </div> </div>";
+        $(".message-feed").append(tag);
+        $('#messageText').val("");
+
+//        $.post("message", message,
+//            function(data) {
+//                //TODO!!
+//
+//            }, "json");
+    });
+});
+
 setInterval(function(){
     var loadedMsgIds = getLoadedMessageIds();
     $.getJSON("message_id", function(data){
@@ -18,12 +63,12 @@ setInterval(function(){
                       var messageTag = "<div class=\"message col-lg-12\" id=\"MSG" + message.id +
                           "\"> <div class=\"message-author\">" + message.user +
                           "</div> <div class=\"row\"> <div class=\"col-lg-10 simple-message list-group-item\" style=\"background: " + colors[users.indexOf(message.user)] +
-                          ";\">" + replaceUrl(message.text) +
+                          ";\">" + Parser.replaceUrl(message.text) +
                           "</div><div class=\"col-lg-2 message-time\">" + getTime(message.time) + "</div> </div> </div>";
-                           $(".message-feed").append(messageTag);
+                      $(".message-feed").append(messageTag);
 
                       $("#MSG" + message.id + " a").each(function() {
-                          checkLink(this);
+                          Parser.checkLink(this);
                       });
                   },
                   async: false
