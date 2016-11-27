@@ -4,5 +4,6 @@
 public enum User {
     ME,
     MY_FRIEND,
+    SOME_WEIRD_GUY,
     SOME_OTHER_USER
 }

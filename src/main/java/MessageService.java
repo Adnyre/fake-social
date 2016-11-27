@@ -29,7 +29,9 @@ public class MessageService {
         return ids;
     }
 
-//    public
+    public void addMessage(Message message) {
+        messages.add(new Message(message));
+    }
 
     public void start() {
         ExecutorService exec = Executors.newSingleThreadExecutor();

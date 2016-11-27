@@ -3,13 +3,17 @@ var colors =['aquamarine', 'bisque', 'pink', 'plum'];
 var users = [];
 
 $(document).ready(function (e) {
+    $('#emoBtn').click(function() {
+        $('#modal').show();
+    });
+
     $('#source').click(function (e) { //Offset mouse Position
         var coords = {
              x: e.pageX - $(this).offset().left,
              y: e.pageY - $(this).offset().top
          };
         $('#messageText').val($('#messageText').val() + EmoticonHandler.emoticons[EmoticonHandler.getIndex(coords)]);
-        $('#myModal').hide();
+        $('#modal').hide();
     });
 
     $('#sendBtn').click(function (e) {
@@ -31,23 +35,28 @@ $(document).ready(function (e) {
             text: rawText
         };
 
-        var tag = "<div class=\"message col-lg-12\" id=\"MSG" + 0 +
-          "\"> <div class=\"message-author\">" + message.user +
+        var tag = "<div class=\"message col-lg-12 own-message\">" +
+          "<div class=\"message-author\">" + message.user +
           "</div> <div class=\"row\"> <div class=\"col-lg-10 simple-message list-group-item\" style=\"background: " +
-          colors[users.indexOf(message.user)] + ";\">" + Parser.replaceEmoticons(message.text) +
+          colors[users.indexOf(message.user)] + ";\">" + Parser.parse(message.text) +
           "</div><div class=\"col-lg-2 message-time\">" + getTime(message.time) + "</div> </div> </div>";
         $(".message-feed").append(tag);
         $('#messageText').val("");
 
-//        $.post("message", message,
-//            function(data) {
-//                //TODO!!
-//
-//            }, "json");
+        $.ajax({
+            url: "message",
+            type: "POST",
+            data: JSON.stringify(message),
+            contentType: "application/json; charset=utf-8",
+            success: function() {
+                update();
+                $('.own-message').remove();
+            }
+        });
     });
 });
 
-setInterval(function(){
+var update = function() {
     var loadedMsgIds = getLoadedMessageIds();
     $.getJSON("message_id", function(data){
 
@@ -63,7 +72,7 @@ setInterval(function(){
                       var messageTag = "<div class=\"message col-lg-12\" id=\"MSG" + message.id +
                           "\"> <div class=\"message-author\">" + message.user +
                           "</div> <div class=\"row\"> <div class=\"col-lg-10 simple-message list-group-item\" style=\"background: " + colors[users.indexOf(message.user)] +
-                          ";\">" + Parser.replaceUrl(message.text) +
+                          ";\">" + Parser.parse(message.text) +
                           "</div><div class=\"col-lg-2 message-time\">" + getTime(message.time) + "</div> </div> </div>";
                       $(".message-feed").append(messageTag);
 
@@ -76,7 +85,7 @@ setInterval(function(){
             }
         });
     });
-}, 8000);
+};
 
 var getLoadedMessageIds = function() {
     var ids = [];
@@ -99,3 +108,7 @@ var getTime = function (time) {
     }
     return time.time.hour + ":" + time.time.minute + ":" + time.time.second;
 }
+
+setInterval(function(){
+    update();
+}, 8000);

@@ -17,6 +17,10 @@ public class Message {
         id = ++counter;
     }
 
+    public Message(Message orig) {
+        this(orig.getTime(), orig.getUser(), orig.getText());
+    }
+
     public int getId() {
         return id;
     }

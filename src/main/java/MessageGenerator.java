@@ -11,14 +11,14 @@ public class MessageGenerator {
     private static final Random RANDOM = new Random();
     private static final String[] TEXT_POOL = {
             "Hello!",
-            "Bye!",
+            "Bye! (kiss)",
             "LOL! https://upload.wikimedia.org/wikipedia/commons/8/81/Comet_67P_on_19_September_2014_NavCam_mosaic.jpg",
             "whatever",
             "couldn't care less",
-            "WOW!",
+            "(wow)WOW!(wow)",
             "OMG! https://upload.wikimedia.org/wikipedia/commons/8/81/Comet_67P_on_19_September_2014_NavCam_mosaic.jpg",
-            "Here: www.example.com",
-            "Have a look at http://www.example.com",
+            "Here: www.example.com (blushing)",
+            "Have a look at http://www.example.com (cwl)",
             "http://en.wikipedia.org - look here",
             "behold: https://upload.wikimedia.org/wikipedia/commons/8/81/Comet_67P_on_19_September_2014_NavCam_mosaic.jpg"
     };
@@ -30,7 +30,7 @@ public class MessageGenerator {
     }
 
     private User randomUser() {
-        return USERS.get(RANDOM.nextInt(USERS.size()));
+        return USERS.get(RANDOM.nextInt(USERS.size() - 1) + 1);
     }
 
     private String randomText() {
